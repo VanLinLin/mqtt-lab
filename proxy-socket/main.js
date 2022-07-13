@@ -25,18 +25,28 @@ server.listen(serverPort, () => {
   console.log("ssh websocket server started");
 });
 
-/*
-mqtt init
-*/ 
+// mqtt init
+const client = mqtt.connect("mqtt://localhost:1883", {
+  username: "van",
+  password: "123",
+});
+
+client.on("connect", function () {
+  console.log("MQTT CONNECTION START");
+  client.subscribe("monosparta/chat");
+});
 
 const io = require("socket.io")(server);
 
 io.on("connection", function (socket) {
-  socket.on("disconnect", function () {
-    
-  });
+  socket.on("disconnect", function () {});
   socket.on("chat", function (msg) {
-    //
+    client.publish("monosparta/chat", JSON.stringify(msg));
+  });
+
+  client.on("message", function (topic, msg) {
+    // 以 chat 發送訊息給監聽的 client
+    socket.emit("chat", JSON.parse(msg));
   });
   try {
     //

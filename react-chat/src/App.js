@@ -1,5 +1,5 @@
 import "./App.css";
-import React, {useState, useEffect, useRef} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import webSocket from "socket.io-client";
 
 const App = () => {
@@ -35,7 +35,7 @@ const App = () => {
 
   const sendMessage = () => {
     if (name !== "" && message !== "") {
-      ws.emit("chat", {name, message});
+      ws.emit("chat", { name, message });
       setMessage("");
     }
   };
@@ -52,7 +52,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    chatBoxref.current.scrollIntoView({behavior: "auto"});
+    chatBoxref.current.scrollIntoView({ behavior: "auto" });
     return () => {};
   }, [chat]);
 
@@ -91,7 +91,7 @@ const App = () => {
         </button>
         <div
           className={`bg-gray-900 ${popup ? "hidden" : "grid"} w-full`}
-          style={{height: `${height}px`}}
+          style={{ height: `${height}px` }}
         >
           <div
             className={`bg-gray-800 text-sm flex items-center text-white h-6 w-full`}
@@ -101,7 +101,7 @@ const App = () => {
 
           <div
             className="block justify-center items-center overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-800"
-            style={{height: `calc(${height}px - 9.5rem)`}}
+            style={{ height: `calc(${height}px - 9.5rem)` }}
           >
             {chat.map((data, index) => (
               <div key={index}>
